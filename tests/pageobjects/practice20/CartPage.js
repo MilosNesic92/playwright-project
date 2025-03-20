@@ -6,16 +6,17 @@ class CartPage {
         this.firstName = page.locator('#first-name');
         this.lastName = page.locator('#last-name');
         this.postalCode = page.locator('#postal-code');
-        this.continueBtn = page.locator('#continue');
-        this.finishBtn = page.locator('#finish');
+        this.clickContinueBtn = page.locator('#continue');
+        this.clickFinishBtn = page.locator('#finish');
+        this.clickBackHomeBtn = page.locator('#back-to-products');
 
     }
 
-    async clickCheckoutBtn() {
+    // async clickCheckoutBtn() {
 
-        await this.clickCheckout.click();
+    //     await this.clickCheckout.click();
 
-    }
+    // }
 
     async checkoutPersonalInfo(name, surname, zip) {
 
@@ -25,17 +26,17 @@ class CartPage {
 
     }
 
-    async clickContinueBtn() {
+    // async clickContinueBtn() {
 
-        await this.continueBtn.click();
+    //     await this.continueBtn.click();
 
-    }
+    // }
 
-    async clickFinishBtn() {
+    // async clickFinishBtn() {
 
-        await this.finishBtn.click();
+    //     await this.finishBtn.click();
 
-    }
+    // }
 
 
 }

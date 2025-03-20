@@ -7,7 +7,7 @@
     "validNamename" : "Janko",
     "validSurname" : "Jankovic",
     "validZip" : "18000",
-    "title" : "Products",
+    "titleProducts" : "Products",
     "itemNameBackpack" : "Sauce Labs Backpack"
 
 }

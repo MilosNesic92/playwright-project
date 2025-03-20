@@ -35,13 +35,7 @@ async addToCartBtn() {
     await this.clickAddToCartBtn.nth(2).click();
 
 }
-
-async clickCartBtn() {
-
-    await this.cartBtn.click();
-
-}
-    
+ 
 
 }
 
