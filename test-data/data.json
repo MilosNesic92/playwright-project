@@ -1,0 +1,13 @@
+{
+
+    "validUsername" : "standard_user",
+    "validPassword" : "secret_sauce",
+    "invalidUsername" : "standard_user",
+    "invalidPassword" : "secret_sauces",
+    "validNamename" : "Janko",
+    "validSurname" : "Jankovic",
+    "validZip" : "18000",
+    "title" : "Products",
+    "itemNameBackpack" : "Sauce Labs Backpack"
+
+}
