@@ -5,7 +5,7 @@ import LogInPractice from "./pageobjects/practice20/LogInPage";
 import ProductsPage from "./pageobjects/practice20/ProductsPage";
 import CartPage from "./pageobjects/practice20/CartPage";
 import iterateThroughProductsAndSelectItem from "./pageobjects/practice20/IterateThroughItems";
-
+//test
 let logIn;
 let prodPage;
 let cartPage;
@@ -136,7 +136,6 @@ test("11 - Iterate through all products and print their names.", async ({ page }
         console.log(printProducts);
 
     }
-
     await logIn.LogOut();
     await expect(page.locator('.login_logo')).toHaveText('Swag Labs');
 

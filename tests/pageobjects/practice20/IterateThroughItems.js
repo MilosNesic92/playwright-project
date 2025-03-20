@@ -1,5 +1,5 @@
 class iterateThroughProductsAndSelectItem {
-//12
+    //Tests #11 and #12
     constructor(page) {
 
         this.page = page;
@@ -8,7 +8,7 @@ class iterateThroughProductsAndSelectItem {
 
     }
 
-    async iterateAndSelect(itemNameToAdd) {
+    async iterateAndSelect(itemNameToAdd) {//Tests #12
 
         for (let i = 0; i < await this.itemNameLocator.count(); i++) {
 
