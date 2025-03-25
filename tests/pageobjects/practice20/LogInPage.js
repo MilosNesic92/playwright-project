@@ -11,6 +11,8 @@ class LogInPractice {
         this.clickBurgerBtn = page.locator('#react-burger-menu-btn');
         this.clickLogOutBtn = page.locator('#logout_sidebar_link');
         this.verifyProducts = page.locator('.title');
+        this.cartCount = page.locator('.shopping_cart_link');
+        this.errorMessage = page.locator('.error-message-container');
 
     }
 
@@ -33,6 +35,18 @@ class LogInPractice {
     async verifyProductTitle(title) {
 
         await expect.soft(this.verifyProducts).toHaveText(title);
+
+    }
+
+    async verifyCartCount(count) {
+
+        await expect.soft(this.cartCount).toHaveCount(count);
+
+    }
+
+    async verifyErrorMessage(textError) {
+
+        await expect.soft(this.errorMessage).toHaveText(textError);
 
     }
 

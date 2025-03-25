@@ -4,10 +4,16 @@
     "validPassword" : "secret_sauce",
     "invalidUsername" : "standard_user",
     "invalidPassword" : "secret_sauces",
-    "validNamename" : "Janko",
+    "validName" : "Janko",
     "validSurname" : "Jankovic",
     "validZip" : "18000",
     "titleProducts" : "Products",
-    "itemNameBackpack" : "Sauce Labs Backpack"
+    "itemNameBackpack" : "Sauce Labs Backpack",
+    "logInErrorMsg" : "Epic sadface: Username and password do not match any user in this service",
+    "titleSwagLabs" : "Swag Labs",
+    "verifyAtoZ" : "Name (A to Z)",
+    "verifyZtoA" : "Name (Z to A)",
+    "verifyHeaderText" : "Thank you for your order!",
+    "verifyErrorMsg" : "Error: First Name is required"
 
 }

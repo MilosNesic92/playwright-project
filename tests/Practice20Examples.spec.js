@@ -35,7 +35,7 @@ test("1 - Log in with valid credentials.", async ({ page }) => {
 test("2 - Log in with invalid credentials and check error message.", async ({ page }) => {
 
     await logIn.LogInPage(data.invalidPassword, data.invalidPassword);
-    await expect(page.locator('.error-message-container')).toHaveText('Epic sadface: Username and password do not match any user in this service');
+    await logIn.verifyErrorMessage(data.logInErrorMsg);
 })
 
 test("3 - Add the first product to the cart and verify the cart count.", async ({ page }) => {
@@ -43,7 +43,7 @@ test("3 - Add the first product to the cart and verify the cart count.", async (
     await logIn.LogInPage(data.validUsername, data.validPassword);
     await logIn.verifyProductTitle(data.titleProducts);
     await prodPage.clickAddToCartBtn.nth(1).click();
-    await expect(page.locator('.shopping_cart_link')).toHaveCount(1);
+    await logIn.verifyCartCount(1);
 
 })
 
@@ -51,8 +51,10 @@ test("4 - Remove a product from the cart and verify it is removed.", async ({ pa
 
     await logIn.LogInPage(data.validUsername, data.validPassword);
     await logIn.verifyProductTitle(data.titleProducts);
+    await prodPage.clickAddToCartBtn.nth(0).click();
+    await prodPage.removeBtn.nth(0).click();
+    await prodPage.verifyInvisibleCartBadge();
     await logIn.LogOut();
-    await expect(page.locator('.shopping_cart_badge')).not.toBeVisible();
 
 })
 
@@ -61,7 +63,7 @@ test("5 - Log out from the application.", async ({ page }) => {
     await logIn.LogInPage(data.validUsername, data.validPassword);
     await logIn.verifyProductTitle(data.titleProducts);
     await logIn.LogOut();
-    await expect(page.locator('.login_logo')).toHaveText('Swag Labs');
+    await prodPage.verifySwagLabsTitle(data.titleSwagLabs);
 
 })
 
@@ -70,7 +72,7 @@ test("6 - Verify sorting functionality (A-Z).", async ({ page }) => {
 
     await logIn.LogInPage(data.validUsername, data.validPassword);
     await logIn.verifyProductTitle(data.titleProducts);
-    await expect(page.locator('.active_option')).toHaveText('Name (A to Z)');
+    await prodPage.verifyAtoZDropdown(data.verifyAtoZ);
     await logIn.LogOut();
 
 })
@@ -81,9 +83,9 @@ test("7 - Verify sorting functionality (Z-A).", async ({ page }) => {
     await logIn.LogInPage(data.validUsername, data.validPassword);
     await logIn.verifyProductTitle(data.titleProducts);
     await prodPage.sortingZtoA();
-    await expect(page.locator('.active_option')).toHaveText('Name (Z to A)');
+    await prodPage.verifyAtoZDropdown(data.verifyZtoA);
     await logIn.LogOut();
-    await expect(page.locator('.login_logo')).toHaveText('Swag Labs');
+    await prodPage.verifySwagLabsTitle(data.titleSwagLabs);
 
 })
 
@@ -95,7 +97,7 @@ test("8 - Verify sorting by price (low to high).", async ({ page }) => {
     await prodPage.sortingLowHigh();
     await expect.soft(page.locator('.active_option')).toHaveText('Price (high to low)');
     await logIn.LogOut();
-    await expect(page.locator('.login_logo')).toHaveText('Swag Labs');
+    await prodPage.verifySwagLabsTitle(data.titleSwagLabs);
 
 })
 
@@ -106,7 +108,7 @@ test("9 - Verify sorting by price (high to low).", async ({ page }) => {
     await prodPage.sortingHighLow();
     await expect(page.locator('.active_option')).toHaveText('Price (low to high)');
     await logIn.LogOut();
-    await expect(page.locator('.login_logo')).toHaveText('Swag Labs');
+    await prodPage.verifySwagLabsTitle(data.titleSwagLabs);
 
 })
 
@@ -116,9 +118,9 @@ test("10 - Add multiple products to the cart and verify cart count.", async ({ p
     await logIn.LogInPage(data.validUsername, data.validPassword);
     await logIn.verifyProductTitle(data.titleProducts);
     await prodPage.addToCartBtn(); //Adding 3 products to cart
-    await expect(page.locator('.shopping_cart_badge')).toHaveText('3');
+    await prodPage.verifyShoppingCartBadge('3');
     await logIn.LogOut();
-    await expect(page.locator('.login_logo')).toHaveText('Swag Labs');
+    await prodPage.verifySwagLabsTitle(data.titleSwagLabs);
 
 })
 
@@ -137,7 +139,7 @@ test("11 - Iterate through all products and print their names.", async ({ page }
 
     }
     await logIn.LogOut();
-    await expect(page.locator('.login_logo')).toHaveText('Swag Labs');
+    await prodPage.verifySwagLabsTitle(data.titleSwagLabs);
 
 })
 
@@ -148,7 +150,7 @@ test("12 - Select a specific product based on its name and add it to the cart.",
     await logIn.verifyProductTitle(data.titleProducts);
     await selectProduct.iterateAndSelect(data.itemNameBackpack);
     await logIn.LogOut();
-    await expect(page.locator('.login_logo')).toHaveText('Swag Labs');
+    await prodPage.verifySwagLabsTitle(data.titleSwagLabs);
 
 })
 
@@ -157,11 +159,11 @@ test("13 - Select a specific product based on its name and add it to the cart.",
     await logIn.LogInPage(data.validUsername, data.validPassword);
     await logIn.verifyProductTitle(data.titleProducts);
     await prodPage.clickAddToCartBtn.nth(0).click();
-    await expect(page.locator('.shopping_cart_badge')).toHaveText('1');
+    await prodPage.verifyShoppingCartBadge('1');
     await page.reload();
-    await expect(page.locator('.shopping_cart_badge')).toHaveText('1');
+    await prodPage.verifyShoppingCartBadge('1');
     await logIn.LogOut();
-    await expect(page.locator('.login_logo')).toHaveText('Swag Labs');
+    await prodPage.verifySwagLabsTitle(data.titleSwagLabs);
 
 })
 
@@ -171,16 +173,16 @@ test("14 - Complete the checkout process successfully.", async ({ page }) => {
     await logIn.LogInPage(data.validUsername, data.validPassword);
     await logIn.verifyProductTitle(data.titleProducts);
     await prodPage.clickAddToCartBtn.nth(0).click();
-    await expect(page.locator('.shopping_cart_badge')).toHaveText('1');
+    await prodPage.verifyShoppingCartBadge('1');
     await prodPage.cartBtn.click();
     await cartPage.clickCheckout.click();
-    await cartPage.checkoutPersonalInfo('Janko', 'Jankovic', '18000');
+    await cartPage.checkoutPersonalInfo(data.validName, data.validSurname, data.validZip);
     await cartPage.clickContinueBtn.click();
     await cartPage.clickFinishBtn.click();
-    await expect(page.locator('.complete-header')).toHaveText('Thank you for your order!');
+    await prodPage.verifyCompleteHeader(data.verifyHeaderText)
     await cartPage.clickBackHomeBtn.click();
     await logIn.LogOut();
-    await expect(page.locator('.login_logo')).toHaveText('Swag Labs');
+    await prodPage.verifySwagLabsTitle(data.titleSwagLabs);
 
 })
 
@@ -189,13 +191,13 @@ test("15 - Verify that checkout fails when required fields are empty", async ({ 
     await logIn.LogInPage(data.validUsername, data.validPassword);
     await logIn.verifyProductTitle(data.titleProducts);
     await prodPage.clickAddToCartBtn.nth(0).click();
-    await expect(page.locator('.shopping_cart_badge')).toHaveText('1');
+    await prodPage.verifyShoppingCartBadge('1');
     await prodPage.cartBtn.click();
     await cartPage.clickCheckout.click();
     await cartPage.clickContinueBtn.click();
-    await expect(page.locator('.error-message-container')).toHaveText('Error: First Name is required');
+    await prodPage.verifyErrorMsgContainer(data.verifyErrorMsg);
     await logIn.LogOut();
-    await expect(page.locator('.login_logo')).toHaveText('Swag Labs');
+    await prodPage.verifySwagLabsTitle(data.titleSwagLabs);
 
 })
 
