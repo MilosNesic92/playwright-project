@@ -95,7 +95,7 @@ test("8 - Verify sorting by price (low to high).", async ({ page }) => {
     await logIn.LogInPage(data.validUsername, data.validPassword);
     await logIn.verifyProductTitle(data.titleProducts);
     await prodPage.sortingLowHigh();
-    await expect.soft(page.locator('.active_option')).toHaveText('Price (high to low)');
+    await prodPage.verifyAtoZDropdown(data.priceHighLow);
     await logIn.LogOut();
     await prodPage.verifySwagLabsTitle(data.titleSwagLabs);
 
@@ -106,7 +106,8 @@ test("9 - Verify sorting by price (high to low).", async ({ page }) => {
     await logIn.LogInPage(data.validUsername, data.validPassword);
     await logIn.verifyProductTitle(data.titleProducts);
     await prodPage.sortingHighLow();
-    await expect(page.locator('.active_option')).toHaveText('Price (low to high)');
+    await prodPage.verifyAtoZDropdown(data.priceLowHigh);
+    // await expect(page.locator('.active_option')).toHaveText('Price (low to high)');
     await logIn.LogOut();
     await prodPage.verifySwagLabsTitle(data.titleSwagLabs);
 
@@ -128,16 +129,7 @@ test("11 - Iterate through all products and print their names.", async ({ page }
 
     await logIn.LogInPage(data.validUsername, data.validPassword);
     await logIn.verifyProductTitle(data.titleProducts);
-
-    const itemName = page.locator('.inventory_item_name');
-
-    for (let i = 0; i < await itemName.count(); i++) {
-
-        const iterateProducts = itemName.nth(i);
-        const printProducts = await iterateProducts.textContent();
-        console.log(printProducts);
-
-    }
+    await prodPage.iterateThroughProducts();
     await logIn.LogOut();
     await prodPage.verifySwagLabsTitle(data.titleSwagLabs);
 

@@ -16,6 +16,7 @@ constructor(page) {
     this.shoppingCartBadge = page.locator('.shopping_cart_badge');
     this.completeHeader = page.locator('.complete-header');
     this.errorMsgContainer = page.locator('.error-message-container');
+    this.itemName = page.locator('.inventory_item_name');
 
 }
 
@@ -37,6 +38,10 @@ async sortingHighLow() {
 
 }
 
+
+
+
+
 async addToCartBtn() {
 
     await this.clickAddToCartBtn.nth(0).click();
@@ -44,6 +49,21 @@ async addToCartBtn() {
     await this.clickAddToCartBtn.nth(2).click();
 
 }
+
+async iterateThroughProducts() {
+
+    for (let i = 0; i < await this.itemName.count(); i++) {
+
+        const iterateProducts = this.itemName.nth(i);
+        const printProducts = await iterateProducts.textContent();
+        console.log(printProducts);
+
+    }
+
+
+}
+
+
 
 async verifyInvisibleCartBadge() {
 
@@ -53,31 +73,31 @@ async verifyInvisibleCartBadge() {
 
 async verifySwagLabsTitle(swagLabs) {
 
-    await expect(this.titleSwagLabs).toHaveText(swagLabs);
+    await expect.soft(this.titleSwagLabs).toHaveText(swagLabs);
 
 }
 
 async verifyAtoZDropdown(atoz) {
 
-    await expect(this.dropdownAtoZ).toHaveText(atoz);
+    await expect.soft(this.dropdownAtoZ).toHaveText(atoz);
 
 }
 
 async verifyShoppingCartBadge(cartBadgeNumber) {
 
-    await expect(this.shoppingCartBadge).toHaveText(cartBadgeNumber);
+    await expect.soft(this.shoppingCartBadge).toHaveText(cartBadgeNumber);
 
 }
 
 async verifyCompleteHeader(thankYouText) {
 
-    expect(this.completeHeader).toHaveText(thankYouText);
+    await expect.soft(this.completeHeader).toHaveText(thankYouText);
 
 }
 
 async verifyErrorMsgContainer(errorMsg) {
 
-    await expect(this.errorMsgContainer).toHaveText(errorMsg);
+    await expect.soft(this.errorMsgContainer).toHaveText(errorMsg);
 
 }
 
